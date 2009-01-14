@@ -1,0 +1,53 @@
+<html>
+<head>
+<title></title>
+  <style type="text/css">
+    * { padding: 0; margin: 0; }
+    body { background: #CCC; }
+    h1, h2, h3, h4 { }
+    h1 { font-size: 1.4em; }
+    h2 { font-size: 1.2em; }
+    h4 { font-size: .9em; }
+    li { margin-left: 30px; }
+    a:link, a:hover, a:visited { color: #18476F; }
+    #wrapper { width: 90%; margin: 20px auto; }
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+        $(function() {
+            var limit = 10 // how many repos to list
+            var login = 'trptcolin' // your username
+ 
+            $.getJSON('http://github.com/api/v1/json/' + login + '?callback=?', function(data) {
+                var repos = $.grep(data.user.repositories, function(item) {
+                    return !item.fork
+                })
+                var forks = $.grep(data.user.repositories, function(item) {
+                    return item.fork
+                })
+                repos.sort(function(a, b) { return b.watchers - a.watchers })
+                forks.sort(function(a, b) { return b.watchers - a.watchers })
+
+                $.each(repos.slice(0, limit), function() {
+                    $('#repos').append('<li><a href="' + this.url + '">' + this.name + '</a></li>')
+                })
+                $.each(forks.slice(0, limit), function() {
+                    $('#forks').append('<li><a href="' + this.url + '">' + this.name + '</a></li>')
+                })
+
+            })
+        })
+    </script>
+</head>
+<body><div id="wrapper">
+  <h1>trptcolin's stuff</h1>
+  <h2><a href="http://www.plexusweb.com/staff/colin/blog">Blog</a></h2>
+  <h2><a href="http://www.twitter.com/trptcolin">Twitter</a></h2>
+  <h2><a href="http://www.calendaraboutnothing.com/~trptcolin">CAN</a></h2>
+  <h2><a href="http://www.github.com/trptcolin">Github</a></h2>
+  <h4>(originals)</h4>
+  <ol id="repos"</ol>
+  <h4>(forks)</h4>
+  <ol id="forks"</ol>
+</div></body>
+</html>
