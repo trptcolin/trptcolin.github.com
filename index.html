@@ -3,8 +3,8 @@
 <title></title>
   <style type="text/css">
     * { padding: 0; margin: 0; }
-    body { background: #CCC; }
-    h1, h2, h3, h4 { }
+    body { background: #FAFAFA; }
+    h1, h2, h3, h4 { padding: 10px; }
     h1 { font-size: 1.4em; }
     h2 { font-size: 1.2em; }
     h4 { font-size: .9em; }
@@ -17,7 +17,7 @@
         $(function() {
             var limit = 10 // how many repos to list
             var login = 'trptcolin' // your username
- 
+
             $.getJSON('http://github.com/api/v1/json/' + login + '?callback=?', function(data) {
                 var repos = $.grep(data.user.repositories, function(item) {
                     return !item.fork
@@ -41,6 +41,11 @@
 </head>
 <body><div id="wrapper">
   <h1>trptcolin's stuff</h1>
+  <h2>
+    <a href="http://github.com/downloads/trptcolin/trptcolin.github.com/functional-koans.zip">
+      Clojure Functional Koans
+    </a>
+  </h2>
   <h2><a href="http://softwareapprenticeship.wordpress.com">Software Apprenticeship Blog</a></h2>
   <h2><a href="http://www.twitter.com/trptcolin">Twitter</a></h2>
   <h2><a href="http://www.calendaraboutnothing.com/~trptcolin">CAN</a></h2>
