@@ -4,7 +4,7 @@
   <style type="text/css">
     * { padding: 0; margin: 0; }
     body { background: #FAFAFA; }
-    h1, h2, h3, h4 { padding: 10px; }
+    h1, h2, h3, h4 { padding: 10px 0; }
     h1 { font-size: 1.4em; }
     h2 { font-size: 1.2em; }
     h4 { font-size: .9em; }
@@ -18,6 +18,11 @@
             var limit = 10 // how many repos to list
             var login = 'trptcolin' // your username
 
+            var sorter = function(a, b) {
+              if ( b.pushed_at <= a.pushed_at ) {return a;}
+              else {return b;}
+            };
+
             $.getJSON('http://github.com/api/v1/json/' + login + '?callback=?', function(data) {
                 var repos = $.grep(data.user.repositories, function(item) {
                     return !item.fork
@@ -25,8 +30,8 @@
                 var forks = $.grep(data.user.repositories, function(item) {
                     return item.fork
                 })
-                repos.sort(function(a, b) { return b.watchers - a.watchers })
-                forks.sort(function(a, b) { return b.watchers - a.watchers })
+                repos.sort(sorter);
+                forks.sort(sorter);
 
                 $.each(repos.slice(0, limit), function() {
                     $('#repos').append('<li><a href="' + this.url + '">' + this.name + '</a></li>')
@@ -48,11 +53,12 @@
   </h2>
   <h2><a href="http://softwareapprenticeship.wordpress.com">Software Apprenticeship Blog</a></h2>
   <h2><a href="http://www.twitter.com/trptcolin">Twitter</a></h2>
-  <h2><a href="http://www.calendaraboutnothing.com/~trptcolin">CAN</a></h2>
   <h2><a href="http://www.github.com/trptcolin">Github</a></h2>
   <h4>(originals)</h4>
   <ol id="repos"</ol>
   <h4>(forks)</h4>
   <ol id="forks"</ol>
+  <h2>About</h2>
+  <p>Software Craftsman at <a href="http://8thlight.com">8th Light</a></p>
 </div></body>
 </html>
